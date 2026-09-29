@@ -1,164 +1,149 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Download, ChevronRight } from 'lucide-react';
+import {
+  Download,
+  Terminal,
+  Sparkles,
+  Workflow,
+  Menu,
+  X
+} from 'lucide-react';
 import { Logo } from './Logo';
-import { DOWNLOAD_CONFIG } from '../data/product';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 12);
+      setIsScrolled(window.scrollY > 15);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
+  const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-  }, [location.pathname, location.hash]);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const navLinks = [
-    { label: 'Features', to: '/features' },
-    { label: 'AI Coding', to: '/#ai-coding' },
-    { label: 'Documentation', to: '/docs' },
-    { label: 'Changelog', to: '/changelog' },
-    { label: 'Download', to: '/download' }
+    { label: 'Features', id: 'features', icon: Sparkles },
+    { label: 'IDE Demo', id: 'demo', icon: Terminal },
+    { label: 'Architecture', id: 'architecture', icon: Workflow },
+    { label: 'Download', id: 'download', icon: Download },
   ];
 
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-200 bg-white/95 backdrop-blur-md ${
         isScrolled
-          ? 'border-b border-neutral-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.03)]'
+          ? 'border-b border-neutral-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)]'
           : 'border-b border-neutral-200/50'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Brand Logo */}
-          <div className="flex items-center gap-8">
+      <div className="w-full px-4 sm:px-8 lg:px-12">
+        <div className="flex items-center justify-between h-18">
+          {/* Brand Logo & Navigation */}
+          <div className="flex items-center gap-8 lg:gap-10">
             <Logo showBadge size="md" />
 
             {/* Desktop Navigation Links */}
             <nav className="hidden md:flex items-center space-x-1" aria-label="Main Navigation">
-              {navLinks.map((link) => {
-                const isHash = link.to.startsWith('/#');
-                if (isHash) {
-                  return (
-                    <a
-                      key={link.to}
-                      href={link.to}
-                      className="px-3.5 py-1.5 text-sm font-medium text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100/70 rounded-md transition-colors"
-                    >
-                      {link.label}
-                    </a>
-                  );
-                }
-
-                return (
-                  <NavLink
-                    key={link.to}
-                    to={link.to}
-                    className={({ isActive }) =>
-                      `px-3.5 py-1.5 text-sm font-medium rounded-md transition-colors ${
-                        isActive
-                          ? 'text-blue-600 bg-blue-50/80 font-semibold'
-                          : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100/70'
-                      }`
-                    }
-                  >
-                    {link.label}
-                  </NavLink>
-                );
-              })}
+              {navLinks.map((link) => (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => scrollToSection(link.id)}
+                  className="px-3.5 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-950 rounded-lg hover:bg-neutral-100/70 transition-colors cursor-pointer"
+                >
+                  {link.label}
+                </button>
+              ))}
             </nav>
           </div>
 
-          {/* Right-side Primary Action */}
+          {/* Right-side Actions: GitHub & Download */}
           <div className="hidden sm:flex items-center gap-3">
-            <span className="text-xs text-neutral-500 font-mono tracking-tight hidden lg:inline-block">
-              v{DOWNLOAD_CONFIG.macos.version}
-            </span>
-            <Link
-              to="/download"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-lg shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+            <a
+              href="https://github.com/CoreMind-IDE"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-neutral-700 hover:text-neutral-950 bg-neutral-100 hover:bg-neutral-200/80 rounded-xl transition-all"
             >
-              <Download className="w-4 h-4" aria-hidden="true" />
-              <span>Download for macOS</span>
-            </Link>
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+              <span>GitHub</span>
+            </a>
+
+            <button
+              type="button"
+              onClick={() => scrollToSection('download')}
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl shadow-xs transition-all cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Get CoreMind</span>
+            </button>
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="flex sm:hidden items-center">
+          {/* Mobile Menu Hamburger Button */}
+          <div className="flex md:hidden items-center gap-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              aria-expanded={mobileMenuOpen}
-              aria-label="Toggle Navigation Menu"
+              className="p-2 rounded-lg text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-colors"
+              aria-label="Toggle mobile menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6 text-neutral-800" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="sm:hidden border-b border-neutral-200 bg-white px-4 pt-2 pb-5 space-y-1 shadow-lg">
-          {navLinks.map((link) => {
-            const isHash = link.to.startsWith('/#');
-            if (isHash) {
+        <div className="md:hidden border-b border-neutral-200 bg-white px-4 pt-3 pb-6 space-y-3 shadow-lg">
+          <div className="space-y-1">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
               return (
-                <a
-                  key={link.to}
-                  href={link.to}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100"
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => scrollToSection(link.id)}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-medium text-neutral-800 rounded-xl hover:bg-neutral-100 transition-colors text-left"
                 >
+                  <Icon className="w-4 h-4 text-emerald-600" />
                   <span>{link.label}</span>
-                  <ChevronRight className="w-4 h-4 text-neutral-400" />
-                </a>
+                </button>
               );
-            }
+            })}
+          </div>
 
-            return (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  `flex items-center justify-between px-3 py-2 rounded-md text-base font-medium ${
-                    isActive
-                      ? 'text-blue-600 bg-blue-50 font-semibold'
-                      : 'text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100'
-                  }`
-                }
-              >
-                <span>{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-neutral-400" />
-              </NavLink>
-            );
-          })}
+          <div className="pt-3 border-t border-neutral-100 flex flex-col gap-2">
+            <a
+              href="https://github.com/CoreMind-IDE"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-neutral-200 text-neutral-800 text-sm font-semibold hover:bg-neutral-50 transition-colors"
+            >
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+              <span>GitHub Repository</span>
+            </a>
 
-          <div className="pt-3 border-t border-neutral-100 mt-2">
-            <Link
-              to="/download"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs"
+            <button
+              type="button"
+              onClick={() => scrollToSection('download')}
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors"
             >
               <Download className="w-4 h-4" />
-              <span>Download for macOS (v{DOWNLOAD_CONFIG.macos.version})</span>
-            </Link>
-            <p className="text-center text-xs text-neutral-500 mt-2">
-              Requires macOS 12+ (Apple Silicon)
-            </p>
+              <span>Download macOS App</span>
+            </button>
           </div>
         </div>
       )}

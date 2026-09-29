@@ -7,17 +7,17 @@ import {
   ShieldCheck,
   Copy,
   Check,
+  Terminal,
   Info
 } from 'lucide-react';
 import { DOWNLOAD_CONFIG } from '../data/product';
 
 export const DownloadSection: React.FC = () => {
-
   const [copiedSha, setCopiedSha] = useState(false);
+  const [copiedTerminal, setCopiedTerminal] = useState(false);
   const [downloadTriggered, setDownloadTriggered] = useState(false);
   const macConfig = DOWNLOAD_CONFIG.macos;
-  const windowsConfig = DOWNLOAD_CONFIG.windows;
-  const linuxConfig = DOWNLOAD_CONFIG.linux;
+  const terminalInstallCmd = 'curl -fsSL https://get.coremind.dev | bash';
 
   const handleDownload = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     if (macConfig.url === 'REPLACE_WITH_ACTUAL_DOWNLOAD_URL') {
@@ -35,146 +35,182 @@ export const DownloadSection: React.FC = () => {
     }
   };
 
+  const copyTerminalCmd = () => {
+    navigator.clipboard.writeText(terminalInstallCmd);
+    setCopiedTerminal(true);
+    setTimeout(() => setCopiedTerminal(false), 2500);
+  };
+
   return (
-    <section id="download" className="py-20 bg-white border-b border-neutral-100">
+    <section id="download" className="py-24 bg-neutral-50/50 border-b border-neutral-200/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
-            Installation
+          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200/80 font-mono">
+            Get CoreMind
           </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
-            Download CoreMind
+          <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-neutral-950">
+            Download &amp; Quickstart
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed">
-            Bring AI-powered development to your Mac.
+          <p className="mt-4 text-lg text-neutral-600 leading-relaxed">
+            Get the native macOS desktop app or install via terminal.
           </p>
         </div>
 
-        {/* Primary Download Card */}
-        <div className="max-w-xl mx-auto">
+        {/* Primary Download Grid */}
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Card 1: Desktop DMG */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="bg-white rounded-2xl border-2 border-neutral-200/90 p-8 shadow-sm hover:border-blue-400 hover:shadow-md transition-all text-center relative overflow-hidden"
+            className="bg-white rounded-3xl border-2 border-neutral-200/90 p-7 sm:p-9 shadow-xs hover:border-emerald-400 hover:shadow-md transition-all text-left flex flex-col justify-between"
           >
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold tracking-wide border border-blue-100 mb-6">
-              <Apple className="w-3.5 h-3.5 text-blue-600" />
-              <span>CoreMind for macOS</span>
-            </div>
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200 mb-5">
+                <Apple className="w-3.5 h-3.5 text-emerald-700" />
+                <span>macOS Disk Image</span>
+              </div>
 
-            <h3 className="text-2xl font-bold text-neutral-950">
-              macOS Application
-            </h3>
+              <h3 className="text-2xl font-bold text-neutral-950">
+                macOS Desktop App
+              </h3>
 
-            {/* Hardware Architecture Spec */}
-            <div className="mt-3 flex items-center justify-center gap-2 text-sm text-neutral-600">
-              <Cpu className="w-4 h-4 text-neutral-500" />
-              <span className="font-medium text-neutral-900">{macConfig.architecture}</span>
-              <span className="text-neutral-300">•</span>
-              <span>{macConfig.minOS}</span>
-            </div>
+              <div className="mt-2.5 flex items-center gap-2 text-xs font-mono text-neutral-600">
+                <Cpu className="w-4 h-4 text-neutral-500" />
+                <span className="font-semibold text-neutral-900">{macConfig.architecture}</span>
+                <span>•</span>
+                <span>{macConfig.minOS}</span>
+              </div>
 
-            {/* Notification alert if placeholder URL */}
-            {downloadTriggered && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="mt-6 p-4 rounded-xl bg-blue-50 border border-blue-200 text-left text-xs text-blue-900 space-y-1"
-              >
-                <div className="font-semibold flex items-center gap-1.5">
-                  <Info className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Release Asset Configuration Notice</span>
+              <p className="mt-4 text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                Native Apple Silicon binary with zero-telemetry local indexing and hardware acceleration.
+              </p>
+
+              {downloadTriggered && (
+                <div className="mt-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900">
+                  <div className="font-bold flex items-center gap-1.5 mb-1">
+                    <Info className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Demo Build Link</span>
+                  </div>
+                  <span>Demo package placeholder ready. Connects to your release DMG asset in production.</span>
                 </div>
-                <p className="text-blue-800 leading-relaxed">
-                  The download endpoint is set to the configurable placeholder <code className="bg-blue-100 px-1 py-0.5 rounded font-mono text-[10px]">REPLACE_WITH_ACTUAL_DOWNLOAD_URL</code> in <code className="bg-blue-100 px-1 py-0.5 rounded font-mono text-[10px]">data/product.ts</code>. In production, this points to your hosted .dmg artifact or GitHub Releases asset.
-                </p>
-              </motion.div>
-            )}
+              )}
+            </div>
 
-            {/* Primary Action Button */}
-            <div className="mt-8">
+            <div className="mt-8 space-y-3">
               <a
                 href={macConfig.url}
                 onClick={handleDownload}
                 download
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-xl shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl shadow-xs transition-all cursor-pointer"
               >
-                <Download className="w-5 h-5" aria-hidden="true" />
-                <span>Download for macOS</span>
+                <Download className="w-4 h-4" />
+                <span>Download .dmg (v{macConfig.version})</span>
               </a>
-            </div>
 
-            {/* Version and package information underneath */}
-            <div className="mt-4 space-y-1 text-xs text-neutral-500 font-mono">
-              <div>Current version: v{macConfig.version}</div>
-              <div>macOS application • {macConfig.packageType} • {macConfig.size}</div>
-            </div>
+              <div className="flex items-center justify-between text-xs text-neutral-500 font-mono pt-2">
+                <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span>Apple Notarized</span>
+                </div>
 
-            {/* Checksum and Security Verification */}
-            <div className="mt-6 pt-6 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
-              <div className="flex items-center gap-1.5 text-emerald-700">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>Apple Notarized Binary</span>
+                {macConfig.sha256 && (
+                  <button
+                    type="button"
+                    onClick={copyChecksum}
+                    className="inline-flex items-center gap-1 text-neutral-600 hover:text-neutral-900 cursor-pointer"
+                    title="Copy SHA-256 checksum"
+                  >
+                    {copiedSha ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedSha ? 'Copied' : 'SHA-256'}</span>
+                  </button>
+                )}
               </div>
-
-              {macConfig.sha256 && (
-                <button
-                  type="button"
-                  onClick={copyChecksum}
-                  className="inline-flex items-center gap-1.5 text-neutral-600 hover:text-neutral-900 transition-colors p-1 rounded hover:bg-neutral-100"
-                  title="Copy SHA-256 checksum"
-                >
-                  {copiedSha ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  ) : (
-                    <Copy className="w-3.5 h-3.5 text-neutral-400" />
-                  )}
-                  <span className="font-mono text-[11px]">
-                    {copiedSha ? 'Checksum Copied' : 'SHA-256 Checksum'}
-                  </span>
-                </button>
-              )}
             </div>
           </motion.div>
 
-          {/* Platform Status Architecture Note */}
-          <div className="mt-8 rounded-xl border border-neutral-200 bg-neutral-50/80 p-5 text-left space-y-3">
-            <span className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wider">
-              Platform Availability Status
-            </span>
-
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-neutral-200">
-                <div className="flex items-center gap-2">
-                  <Apple className="w-4 h-4 text-neutral-900" />
-                  <span className="font-semibold text-neutral-900">macOS</span>
-                  <span className="text-neutral-500">(Apple Silicon)</span>
-                </div>
-                <span className="text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[10px]">
-                  Available Now
-                </span>
+          {/* Card 2: Terminal / CLI One-Liner */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="bg-white rounded-3xl border border-neutral-200 p-7 sm:p-9 shadow-xs hover:border-emerald-300 hover:shadow-md transition-all text-left flex flex-col justify-between"
+          >
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 text-neutral-800 text-xs font-semibold border border-neutral-200 mb-5">
+                <Terminal className="w-3.5 h-3.5 text-neutral-700" />
+                <span>Command Line Installer</span>
               </div>
 
-              <div className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-neutral-200">
-                <div className="flex items-center gap-2 text-neutral-700">
-                  <span className="font-semibold">Windows</span>
-                </div>
-                <span className="text-neutral-500 font-medium bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200 text-[10px]">
-                  {windowsConfig.note || 'Coming in a future release'}
-                </span>
+              <h3 className="text-2xl font-bold text-neutral-950">
+                Terminal Quickstart
+              </h3>
+
+              <div className="mt-2.5 flex items-center gap-2 text-xs font-mono text-neutral-600">
+                <span>zsh / bash • macOS &amp; Linux</span>
               </div>
 
-              <div className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-neutral-200">
-                <div className="flex items-center gap-2 text-neutral-700">
-                  <span className="font-semibold">Linux</span>
-                </div>
-                <span className="text-neutral-500 font-medium bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200 text-[10px]">
-                  {linuxConfig.note || 'Planned for future releases'}
-                </span>
+              <p className="mt-4 text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                Install the CoreMind CLI and headless agent directly into your PATH with one shell command.
+              </p>
+
+              {/* Terminal Code Box */}
+              <div className="mt-5 p-3 rounded-xl bg-neutral-900 text-neutral-100 font-mono text-xs flex items-center justify-between shadow-inner">
+                <span className="truncate text-emerald-400">$ {terminalInstallCmd}</span>
+                <button
+                  type="button"
+                  onClick={copyTerminalCmd}
+                  className="ml-2 p-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-colors cursor-pointer shrink-0"
+                  aria-label="Copy terminal install command"
+                >
+                  {copiedTerminal ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                </button>
               </div>
+            </div>
+
+            <div className="mt-8 space-y-3">
+              <a
+                href="https://github.com/CoreMind-IDE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-neutral-800 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-all"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                <span>View Source on GitHub</span>
+              </a>
+
+              <div className="text-center text-xs text-neutral-500 font-mono pt-2">
+                Open Source (MIT License)
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Minimal System Specs */}
+        <div className="mt-12 max-w-4xl mx-auto rounded-2xl border border-neutral-200 bg-white p-6 text-left">
+          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-4">
+            System Requirements
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
+            <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/70">
+              <div className="text-neutral-400 text-[10px] uppercase font-bold">OS</div>
+              <div className="font-semibold text-neutral-900 mt-1">macOS 12+ (Apple Silicon)</div>
+            </div>
+            <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/70">
+              <div className="text-neutral-400 text-[10px] uppercase font-bold">Memory</div>
+              <div className="font-semibold text-neutral-900 mt-1">8 GB RAM (16 GB rec.)</div>
+            </div>
+            <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/70">
+              <div className="text-neutral-400 text-[10px] uppercase font-bold">Disk</div>
+              <div className="font-semibold text-neutral-900 mt-1">1.5 GB free space</div>
+            </div>
+            <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/70">
+              <div className="text-neutral-400 text-[10px] uppercase font-bold">Models</div>
+              <div className="font-semibold text-neutral-900 mt-1">Claude 3.7 / Local Ollama</div>
             </div>
           </div>
         </div>

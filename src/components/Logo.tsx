@@ -11,7 +11,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 'md', showBad
   const iconSizes = {
     sm: 'w-6 h-6',
     md: 'w-8 h-8',
-    lg: 'w-10 h-10'
+    lg: 'w-9 h-9'
   };
 
   const textSizes = {
@@ -23,39 +23,37 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 'md', showBad
   return (
     <Link
       to="/"
-      className={`inline-flex items-center gap-2.5 text-neutral-900 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg p-0.5 ${className}`}
+      className={`inline-flex items-center gap-2.5 text-neutral-950 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg py-1 ${className}`}
       aria-label="CoreMind Homepage"
     >
+      {/* Modern Qoder-style tech emblem */}
       <div
-        className={`${iconSizes[size]} relative flex items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs group-hover:bg-blue-700 transition-colors shrink-0`}
+        className={`${iconSizes[size]} relative flex items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 via-green-600 to-emerald-700 text-white shadow-[0_2px_10px_rgba(16,185,129,0.35)] group-hover:shadow-[0_4px_16px_rgba(16,185,129,0.5)] transition-all shrink-0`}
       >
         <svg
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-4/5 h-4/5"
+          className="w-5 h-5 text-white"
           aria-hidden="true"
         >
-          {/* Outer square brackets / code ide motif */}
-          <path d="M7 8L3 12L7 16" />
-          <path d="M17 8L21 12L17 16" />
-          {/* Inner core node */}
-          <circle cx="12" cy="12" r="2.5" fill="currentColor" />
-          <line x1="12" y1="5" x2="12" y2="7" />
-          <line x1="12" y1="17" x2="12" y2="19" />
+          {/* Hexagonal Core & Neural Synapse */}
+          <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" strokeOpacity="0.3" />
+          <path d="M12 6L6 9.5v5L12 18l6-3.5v-5L12 6z" strokeWidth="1.8" />
+          <circle cx="12" cy="12" r="2" fill="white" />
         </svg>
       </div>
 
       <div className="flex items-center gap-2">
-        <span className={`${textSizes[size]} text-neutral-950 font-semibold tracking-tight`}>
+        <span className={`${textSizes[size]} text-neutral-950 font-bold tracking-tight`}>
           CoreMind
         </span>
         {showBadge && (
-          <span className="hidden sm:inline-block text-[10px] font-medium tracking-wide uppercase px-1.5 py-0.5 rounded border border-neutral-200 bg-neutral-50 text-neutral-600">
-            macOS
+          <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+            Agentic IDE
           </span>
         )}
       </div>

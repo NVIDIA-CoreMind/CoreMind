@@ -9,14 +9,13 @@ import {
   Terminal,
   GitBranch,
   Layout,
-  ArrowUpRight
+  ArrowRight
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { FEATURES, type FeatureItem } from '../data/product';
 
 export const Features: React.FC = () => {
   const getFeatureIcon = (iconName: string) => {
-    const props = { className: 'w-5 h-5 text-blue-600' };
+    const props = { className: 'w-6 h-6 text-emerald-600' };
     switch (iconName) {
       case 'Sparkles':
         return <Sparkles {...props} />;
@@ -39,18 +38,25 @@ export const Features: React.FC = () => {
     }
   };
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section id="features" className="py-20 bg-neutral-50/60 border-b border-neutral-100">
+    <section id="features" className="py-24 bg-neutral-50/60 border-b border-neutral-200/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
-            Capabilities
+          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200/80 font-mono">
+            Hackathon Capabilities
           </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
-            Everything you need to build.
+          <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-neutral-950">
+            Engineered for Autonomous Coding
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed">
-            CoreMind combines standard desktop IDE fundamentals with deeply integrated, context-aware AI capabilities designed for real-world software engineering workflows.
+          <p className="mt-4 text-lg text-neutral-600 leading-relaxed">
+            CoreMind combines native desktop IDE performance with deeply integrated AST semantic graphs and agentic workflows.
           </p>
         </div>
 
@@ -63,33 +69,33 @@ export const Features: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="bg-white rounded-xl border border-neutral-200/90 p-6 shadow-xs hover:border-neutral-300 hover:shadow-sm transition-all duration-200 flex flex-col justify-between text-left group"
+              className="bg-white rounded-2xl border border-neutral-200/90 p-6 shadow-xs hover:border-emerald-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between text-left group"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-blue-50/70 border border-blue-100 flex items-center justify-center group-hover:bg-blue-100/80 transition-colors">
+                  <div className="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center group-hover:bg-emerald-100 transition-colors">
                     {getFeatureIcon(feature.icon)}
                   </div>
                   {feature.badge && (
-                    <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-600 border border-neutral-200/60">
+                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200">
                       {feature.badge}
                     </span>
                   )}
                 </div>
 
-                <h3 className="text-base font-semibold text-neutral-900 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-lg font-bold text-neutral-950 group-hover:text-emerald-700 transition-colors">
                   {feature.title}
                 </h3>
 
-                <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
+                <p className="mt-2 text-xs sm:text-sm text-neutral-600 leading-relaxed">
                   {feature.description}
                 </p>
 
                 {/* Bullet details */}
-                <ul className="mt-4 space-y-1.5 pt-3 border-t border-neutral-100">
+                <ul className="mt-4 space-y-2 pt-3.5 border-t border-neutral-100">
                   {feature.bullets.map((bullet, bIdx) => (
-                    <li key={bIdx} className="text-xs text-neutral-500 flex items-start gap-1.5">
-                      <span className="w-1 h-1 rounded-full bg-blue-600 shrink-0 mt-1.5" />
+                    <li key={bIdx} className="text-xs text-neutral-600 flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0 mt-1.5" />
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -97,13 +103,14 @@ export const Features: React.FC = () => {
               </div>
 
               <div className="mt-6 pt-3 border-t border-neutral-100">
-                <Link
-                  to={`/features#${feature.id}`}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('demo')}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800 transition-colors cursor-pointer"
                 >
-                  <span>Learn more</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </Link>
+                  <span>See in action</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </motion.div>
           ))}

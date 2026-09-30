@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import {
   Search,
@@ -16,21 +16,11 @@ import { DOCS_DATA } from '../data/product';
 
 export const DocsPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialSection = searchParams.get('section') || 'getting-started';
-  const initialArticle = searchParams.get('article') || 'quickstart';
+  const activeSectionId = searchParams.get('section') || 'getting-started';
+  const activeArticleSlug = searchParams.get('article') || 'quickstart';
 
-  const [activeSectionId, setActiveSectionId] = useState(initialSection);
-  const [activeArticleSlug, setActiveArticleSlug] = useState(initialArticle);
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
-
-  // Sync state if query params change
-  useEffect(() => {
-    const s = searchParams.get('section');
-    const a = searchParams.get('article');
-    if (s) setActiveSectionId(s);
-    if (a) setActiveArticleSlug(a);
-  }, [searchParams]);
 
   const activeSection = DOCS_DATA.find((sec) => sec.id === activeSectionId) || DOCS_DATA[0];
   const activeArticle =
@@ -38,11 +28,10 @@ export const DocsPage: React.FC = () => {
     activeSection.articles[0];
 
   const handleSelectArticle = (sectionId: string, slug: string) => {
-    setActiveSectionId(sectionId);
-    setActiveArticleSlug(slug);
     setSearchParams({ section: sectionId, article: slug });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
 
   const copyContent = (text: string) => {
     navigator.clipboard.writeText(text);

@@ -86,9 +86,41 @@ npm install
 # Start development server
 npm run dev
 
-# Run production build
+# Run linter
+npm run lint
+
+# Run production build & type checks
 npm run build
 
 # Preview production build
 npm run preview
 ```
+
+---
+
+## CI / CD Pipelines
+
+This repository is configured with automated GitHub Actions pipelines located in [`.github/workflows/`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/.github/workflows/):
+
+### 1. Continuous Integration (CI) — [`ci.yml`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/.github/workflows/ci.yml)
+- **Triggers**: Pull requests targeting `main`, pushes to feature branches, and manual dispatch.
+- **Tasks**:
+  - Sets up Node.js 20 LTS with npm dependency caching.
+  - Runs `npm ci` for deterministic, clean installs.
+  - Runs `npm run lint` (`oxlint`) to catch code style and React hook violations.
+  - Runs `npm run build` (`tsc -b && vite build`) to enforce strict TypeScript safety and bundling integrity.
+  - Automatically cancels redundant in-flight runs when new commits are pushed (`concurrency: cancel-in-progress: true`).
+
+### 2. Continuous Deployment (CD) — [`cd.yml`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/.github/workflows/cd.yml)
+- **Triggers**: Pushes to `main` branch and manual dispatch (`workflow_dispatch`).
+- **Tasks**:
+  - Builds the production distribution with customizable `BASE_PATH` (defaults to `/` or repository subpath).
+  - Automatically generates `404.html` fallback for seamless client-side SPA routing on GitHub Pages.
+  - Uploads the artifact using `@actions/upload-pages-artifact`.
+  - Deploys automatically to **GitHub Pages** via `@actions/deploy-pages`.
+
+#### Enabling GitHub Pages in your GitHub Repository:
+1. Navigate to your repository on GitHub: `https://github.com/NVIDIA-CoreMind/CoreMind/settings/pages`
+2. Under **Build and deployment** → **Source**, select **GitHub Actions**.
+3. Any push or pull request merge to `main` will automatically build and deploy the website.
+

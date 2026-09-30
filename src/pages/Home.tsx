@@ -6,6 +6,7 @@ import { HowItWorks } from '../components/HowItWorks';
 import { AgentSection } from '../components/AgentSection';
 import { ScreenshotGallery } from '../components/ScreenshotGallery';
 import { TechnologySection } from '../components/TechnologySection';
+import { TeamSection } from '../components/TeamSection';
 import { DownloadSection } from '../components/DownloadSection';
 import { DocumentationSection } from '../components/DocumentationSection';
 import { ProjectSection } from '../components/ProjectSection';
@@ -35,7 +36,10 @@ export const Home: React.FC = () => {
       {/* 7. Technology Cards (Electron, React, TypeScript, AI Models, Local Development) */}
       <TechnologySection />
 
-      {/* 8. Dedicated macOS Download Section (Apple Silicon) */}
+      {/* 8. Built by Developers / Team Section */}
+      <TeamSection />
+
+      {/* 9. Dedicated macOS Download Section (Apple Silicon) */}
       <DownloadSection />
 
       {/* 9. Documentation Section (Getting Started, Documentation, GitHub) */}

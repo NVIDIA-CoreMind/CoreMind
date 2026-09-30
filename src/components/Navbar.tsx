@@ -33,6 +33,7 @@ export const Navbar: React.FC = () => {
     { label: 'Product', id: 'product' },
     { label: 'Features', id: 'features' },
     { label: 'How it Works', id: 'how-it-works' },
+    { label: 'Team', id: 'team' },
     { label: 'Download', id: 'download' },
     { label: 'Documentation', id: 'documentation' }
   ];

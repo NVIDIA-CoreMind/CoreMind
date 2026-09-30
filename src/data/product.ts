@@ -54,6 +54,16 @@ export interface TechItem {
   tag: string;
 }
 
+export interface TeamMember {
+  name: string;
+  username: string;
+  role: string;
+  github: string;
+  initials: string;
+  description: string;
+  avatarUrl?: string;
+}
+
 export const PRODUCT_INFO = {
   name: 'CoreMind',
   smallLabel: 'AI-Powered Development Environment',
@@ -320,6 +330,36 @@ export const TECHNOLOGIES: TechItem[] = [
     description: 'Designed around local project workflows.',
     details: 'Direct interaction with your local file system, existing Git branches, CLI packages, and build tooling.',
     tag: 'Workflow Safety'
+  }
+];
+
+export const TEAM_MEMBERS: TeamMember[] = [
+  {
+    name: 'Manoj S Arya',
+    username: 'Manojarya0207',
+    role: 'Lead Developer & AI/ML Engineer',
+    github: 'https://github.com/Manojarya0207',
+    initials: 'MSA',
+    description: "Leading CoreMind's architecture, AI integration, backend development, and overall product development.",
+    avatarUrl: 'https://github.com/Manojarya0207.png'
+  },
+  {
+    name: 'Yashwant Rangrej',
+    username: 'Yashwant-Rangrej',
+    role: 'Frontend & UI Engineer',
+    github: 'https://github.com/Yashwant-Rangrej',
+    initials: 'YR',
+    description: 'Building the CoreMind interface and focusing on frontend architecture, user experience, and developer workflows.',
+    avatarUrl: 'https://github.com/Yashwant-Rangrej.png'
+  },
+  {
+    name: 'Yashas S',
+    username: 'yashas1624',
+    role: 'Software Developer & Product Engineer',
+    github: 'https://github.com/yashas1624',
+    initials: 'YS',
+    description: "Contributing to CoreMind's application development, features, testing, and overall product implementation.",
+    avatarUrl: 'https://github.com/yashas1624.png'
   }
 ];
 

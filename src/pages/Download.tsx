@@ -1,347 +1,177 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Download,
-  Check,
-  Copy,
-  Terminal,
-  Layers,
-  Sparkles,
-  ShieldCheck
-} from 'lucide-react';
-
-import {
-  INSTALLATION_STEPS,
-  SYSTEM_REQUIREMENTS
-} from '../data/product';
+import { Download, Check, Copy, Apple } from 'lucide-react';
+import { DOWNLOAD_CONFIG, SYSTEM_REQUIREMENTS, INSTALLATION_STEPS } from '../data/product';
 
 export const DownloadPage: React.FC = () => {
-  const [activePlatform, setActivePlatform] = useState<'macos' | 'windows' | 'linux' | 'jetbrains' | 'cli'>('macos');
   const [copiedSha, setCopiedSha] = useState(false);
-  const [copiedCli, setCopiedCli] = useState(false);
-
-  const cliInstallCmd = 'curl -fsSL https://coremind.ai/install.sh | bash';
-  const sha256Checksum = 'a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0';
+  const macConfig = DOWNLOAD_CONFIG.macos;
 
   const copyChecksum = () => {
-    navigator.clipboard.writeText(sha256Checksum);
-    setCopiedSha(true);
-    setTimeout(() => setCopiedSha(false), 2000);
-  };
-
-  const copyCliCmd = () => {
-    navigator.clipboard.writeText(cliInstallCmd);
-    setCopiedCli(true);
-    setTimeout(() => setCopiedCli(false), 2000);
+    if (macConfig.sha256) {
+      navigator.clipboard.writeText(macConfig.sha256);
+      setCopiedSha(true);
+      setTimeout(() => setCopiedSha(false), 2000);
+    }
   };
 
   return (
     <div className="bg-white min-h-screen py-16 sm:py-24">
-      <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Header */}
-        <div className="max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold uppercase tracking-wider border border-emerald-200/60 mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Official Releases • v0.1.0</span>
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-neutral-950">
-            Download CoreMind
+        <div className="mb-12">
+          <span className="text-xs font-mono font-medium text-[#6B6B6B] uppercase tracking-wider bg-[#F7F7F8] border border-[#E8E8E8] px-3 py-1 rounded-full">
+            Official Release
+          </span>
+          <h1 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-[#111111]">
+            Download CoreMind for macOS
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
-            Autonomous agentic programming for desktop, terminal, and your favorite IDEs.
+          <p className="mt-4 text-base sm:text-lg text-[#6B6B6B] max-w-xl mx-auto leading-relaxed">
+            AI-powered development environment designed for modern software development on Apple Silicon.
           </p>
+        </div>
 
-          {/* Platform Tab Switcher */}
-          <div className="mt-8 flex justify-center overflow-x-auto py-2">
-            <div className="inline-flex items-center p-1.5 rounded-2xl bg-neutral-100 border border-neutral-200 shadow-inner">
-              {[
-                { id: 'macos', label: 'macOS' },
-                { id: 'windows', label: 'Windows' },
-                { id: 'linux', label: 'Linux' },
-                { id: 'jetbrains', label: 'JetBrains Plugin' },
-                { id: 'cli', label: 'CLI Helper' }
-              ].map((plat) => (
-                <button
-                  key={plat.id}
-                  type="button"
-                  onClick={() => setActivePlatform(plat.id as any)}
-                  className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-                    activePlatform === plat.id
-                      ? 'bg-white text-neutral-950 shadow-xs'
-                      : 'text-neutral-600 hover:text-neutral-950'
-                  }`}
-                >
-                  {plat.label}
-                </button>
-              ))}
+        {/* Primary Download Card */}
+        <div className="bg-white rounded-2xl border border-[#E8E8E8] p-8 sm:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] text-left mb-12">
+          <div className="flex items-center justify-between pb-6 border-b border-[#E8E8E8]">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[#111111] text-white flex items-center justify-center">
+                <Apple className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-[#111111]">CoreMind Desktop IDE</h2>
+                <p className="text-xs font-mono text-[#6B6B6B]">
+                  Apple Silicon (M1/M2/M3/M4) • v{macConfig.version}
+                </p>
+              </div>
             </div>
+
+            <span className="text-xs font-mono bg-[#F7F7F8] border border-[#E8E8E8] px-2.5 py-1 rounded text-[#111111] font-medium">
+              .dmg installer
+            </span>
+          </div>
+
+          <div className="py-6 space-y-4">
+            <p className="text-sm text-[#6B6B6B] leading-relaxed">
+              CoreMind provides project-aware AI assistance, agentic planning, and an integrated native terminal directly inside a clean, white-first desktop interface.
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-y border-[#E8E8E8] text-xs font-mono">
+              <div>
+                <span className="text-[#8E8E93] block text-[10px] uppercase font-sans">Architecture</span>
+                <span className="text-[#111111] font-medium">{macConfig.architecture}</span>
+              </div>
+              <div>
+                <span className="text-[#8E8E93] block text-[10px] uppercase font-sans">Min macOS</span>
+                <span className="text-[#111111] font-medium">{macConfig.minOS}</span>
+              </div>
+              <div>
+                <span className="text-[#8E8E93] block text-[10px] uppercase font-sans">Size</span>
+                <span className="text-[#111111] font-medium">{macConfig.size}</span>
+              </div>
+              <div>
+                <span className="text-[#8E8E93] block text-[10px] uppercase font-sans">Release Date</span>
+                <span className="text-[#111111] font-medium">{macConfig.releaseDate}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-2">
+            <a
+              href={macConfig.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-base font-semibold text-white bg-[#111111] hover:bg-neutral-800 active:bg-black rounded-lg transition-colors shadow-xs"
+            >
+              <Download className="w-5 h-5 text-white" />
+              <span>Download for macOS</span>
+            </a>
+
+            <div className="mt-3 text-center text-xs text-[#8E8E93] font-mono">
+              Available for Apple Silicon • macOS
+            </div>
+
+            {/* SHA Checksum */}
+            {macConfig.sha256 && (
+              <div className="mt-6 pt-4 border-t border-[#E8E8E8] flex items-center justify-between text-xs font-mono text-[#8E8E93]">
+                <span className="truncate max-w-[280px]">
+                  SHA256: {macConfig.sha256.slice(0, 24)}...
+                </span>
+                <button
+                  type="button"
+                  onClick={copyChecksum}
+                  className="inline-flex items-center gap-1 text-[#111111] hover:underline cursor-pointer"
+                >
+                  {copiedSha ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy SHA</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Active Platform Card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activePlatform}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
-            className="bg-white rounded-3xl border border-neutral-200/90 p-8 sm:p-14 shadow-lg text-center max-w-2xl mx-auto"
-          >
-            {activePlatform === 'macos' && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-3xl font-bold text-neutral-950">CoreMind for macOS</h2>
-                  <p className="text-sm text-neutral-500 font-mono mt-1">
-                    v0.1.0 • Apple Silicon (M1/M2/M3/M4) &amp; Intel x86_64
-                  </p>
-                </div>
+        {/* Future platform note */}
+        <div className="p-4 rounded-xl bg-[#F7F7F8] border border-[#E8E8E8] text-xs text-[#6B6B6B] mb-16 text-center">
+          Windows support coming in a future release. CoreMind is currently available for macOS.
+        </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                  <a
-                    href="#download-arm"
-                    className="p-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-all hover:scale-[1.02] flex flex-col items-center justify-center gap-2 shadow-xs"
-                  >
-                    <Download className="w-5 h-5 text-white" />
-                    <span>Apple Silicon (.dmg)</span>
-                    <span className="text-[11px] text-emerald-100 font-normal">M1, M2, M3, M4 series • 94.2 MB</span>
-                  </a>
-
-                  <a
-                    href="#download-intel"
-                    className="p-5 rounded-2xl bg-white hover:bg-neutral-50 text-neutral-950 border border-neutral-300 font-semibold text-sm transition-all flex flex-col items-center justify-center gap-2"
-                  >
-                    <Download className="w-5 h-5 text-neutral-600" />
-                    <span>Intel Mac (.dmg)</span>
-                    <span className="text-[11px] text-neutral-500 font-normal">x86_64 architecture • 98.4 MB</span>
-                  </a>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={copyChecksum}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-mono text-neutral-700 hover:bg-neutral-100 transition-colors"
-                  >
-                    {copiedSha ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5 text-neutral-400" />
-                    )}
-                    <span>{copiedSha ? 'Checksum Copied!' : `SHA-256: ${sha256Checksum.slice(0, 20)}...`}</span>
-                  </button>
-                </div>
-
-                <div className="text-xs text-neutral-500 flex items-center justify-center gap-3">
-                  <span className="flex items-center gap-1 text-emerald-700 font-medium">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" /> Apple Notarized
-                  </span>
-                  <span>•</span>
-                  <span>macOS 12.0 Monterey or later</span>
-                </div>
-              </div>
-            )}
-
-            {activePlatform === 'windows' && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-3xl font-bold text-neutral-950">CoreMind for Windows</h2>
-                  <p className="text-sm text-neutral-500 font-mono mt-1">
-                    v0.1.0 • Windows 10/11 64-bit &amp; ARM64
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                  <a
-                    href="#download-win-exe"
-                    className="p-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-all hover:scale-[1.02] flex flex-col items-center justify-center gap-2 shadow-xs"
-                  >
-                    <Download className="w-5 h-5 text-white" />
-                    <span>User Installer (.exe)</span>
-                    <span className="text-[11px] text-emerald-100 font-normal">64-bit Windows 10/11 • 102 MB</span>
-                  </a>
-
-                  <a
-                    href="#download-win-zip"
-                    className="p-5 rounded-2xl bg-white hover:bg-neutral-50 text-neutral-950 border border-neutral-300 font-semibold text-sm transition-all flex flex-col items-center justify-center gap-2"
-                  >
-                    <Download className="w-5 h-5 text-neutral-600" />
-                    <span>Portable (.zip)</span>
-                    <span className="text-[11px] text-neutral-500 font-normal">No install needed • 110 MB</span>
-                  </a>
-                </div>
-
-                <div className="text-xs text-neutral-500">
-                  Microsoft Authenticode Signed • Zero Administrator Privileges Required
-                </div>
-              </div>
-            )}
-
-            {activePlatform === 'linux' && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-3xl font-bold text-neutral-950">CoreMind for Linux</h2>
-                  <p className="text-sm text-neutral-500 font-mono mt-1">
-                    v0.1.0 • Debian, Ubuntu, Fedora, Arch, and AppImage
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                  <a
-                    href="#deb"
-                    className="p-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-all flex flex-col items-center gap-1.5 shadow-xs"
-                  >
-                    <Download className="w-4 h-4 text-white" />
-                    <span>.deb (Ubuntu/Debian)</span>
-                  </a>
-                  <a
-                    href="#rpm"
-                    className="p-4 rounded-2xl bg-white hover:bg-neutral-50 text-neutral-950 border border-neutral-300 font-semibold text-xs transition-all flex flex-col items-center gap-1.5"
-                  >
-                    <Download className="w-4 h-4 text-neutral-600" />
-                    <span>.rpm (Fedora/RHEL)</span>
-                  </a>
-                  <a
-                    href="#appimage"
-                    className="p-4 rounded-2xl bg-white hover:bg-neutral-50 text-neutral-950 border border-neutral-300 font-semibold text-xs transition-all flex flex-col items-center gap-1.5"
-                  >
-                    <Download className="w-4 h-4 text-neutral-600" />
-                    <span>.AppImage (Universal)</span>
-                  </a>
-                </div>
-              </div>
-            )}
-
-            {activePlatform === 'jetbrains' && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-3xl font-bold text-neutral-950">JetBrains Marketplace Plugin</h2>
-                  <p className="text-sm text-neutral-500 mt-1">
-                    IntelliJ IDEA, PyCharm, WebStorm, GoLand, CLion, Rider
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 text-left text-xs text-neutral-700 space-y-2">
-                  <div className="font-semibold text-neutral-950">Direct Installation in JetBrains:</div>
-                  <ol className="list-decimal pl-5 space-y-1">
-                    <li>Open Settings / Preferences (Cmd+, or Ctrl+Alt+S)</li>
-                    <li>Navigate to <strong>Plugins → Marketplace</strong></li>
-                    <li>Search for <strong>&quot;CoreMind Agent&quot;</strong> and click <strong>Install</strong></li>
-                  </ol>
-                </div>
-
-                <a
-                  href="https://plugins.jetbrains.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-all shadow-xs"
-                >
-                  <Layers className="w-4 h-4 text-white" />
-                  <span>View on JetBrains Marketplace</span>
-                </a>
-              </div>
-            )}
-
-            {activePlatform === 'cli' && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-3xl font-bold text-neutral-950">CoreMind Headless CLI</h2>
-                  <p className="text-sm text-neutral-500 mt-1">
-                    Lightweight terminal binary for macOS, Linux, and Windows WSL
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-neutral-50 text-neutral-800 font-mono text-xs border border-neutral-300">
-                  <div className="flex items-center gap-2 truncate">
-                    <Terminal className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span className="truncate">{cliInstallCmd}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={copyCliCmd}
-                    className="p-1.5 rounded-lg bg-white border border-neutral-300 hover:bg-neutral-100 text-neutral-700 ml-2 shrink-0 transition-colors"
-                    aria-label="Copy CLI install command"
-                  >
-                    {copiedCli ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  </button>
-                </div>
-
-                <div className="text-xs text-neutral-600 text-left">
-                  Run <code className="bg-neutral-100 px-1.5 py-0.5 rounded font-mono font-semibold text-neutral-900">coremind --help</code> to view autonomous command flags and GitHub Actions runner configurations.
-                </div>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Setup Guide Section */}
-        <section className="mt-24 text-left">
-          <div className="mb-10 text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              Quick Setup
-            </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
-              Installation Guide
-            </h2>
-            <p className="mt-2 text-base text-neutral-600">
-              Get up and coding in less than 60 seconds.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
+        {/* Installation Steps */}
+        <div className="text-left mb-16">
+          <h2 className="text-xl font-bold text-[#111111] mb-6 tracking-tight">
+            Installation Steps
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {INSTALLATION_STEPS.map((step) => (
               <div
                 key={step.step}
-                className="p-6 rounded-2xl border border-neutral-200 bg-white hover:border-neutral-300 transition-colors flex flex-col justify-between"
+                className="p-5 rounded-xl border border-[#E8E8E8] bg-white text-left"
               >
-                <div>
-                  <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center mb-4 border border-emerald-200">
-                    {step.step}
-                  </div>
-                  <h3 className="text-sm font-bold text-neutral-900 mb-1">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs text-neutral-600 leading-relaxed">
-                    {step.description}
-                  </p>
+                <div className="text-xs font-mono font-bold text-[#8E8E93] mb-2">
+                  0{step.step}
                 </div>
+                <h3 className="text-sm font-bold text-[#111111] mb-1">
+                  {step.title}
+                </h3>
+                <p className="text-xs text-[#6B6B6B] leading-relaxed">
+                  {step.description}
+                </p>
               </div>
             ))}
           </div>
-        </section>
+        </div>
 
         {/* System Requirements */}
-        <section className="mt-24 text-left">
-          <div className="mb-8 text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              Hardware &amp; System Specs
-            </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
-              System Requirements
-            </h2>
+        <div className="text-left">
+          <h2 className="text-xl font-bold text-[#111111] mb-6 tracking-tight">
+            System Requirements
+          </h2>
+          <div className="space-y-3">
+            {SYSTEM_REQUIREMENTS.map((req) => (
+              <div
+                key={req.category}
+                className="p-4 rounded-xl border border-[#E8E8E8] bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+              >
+                <span className="font-semibold text-[#111111] sm:w-48">
+                  {req.category}
+                </span>
+                <span className="text-[#6B6B6B] sm:flex-1 font-mono">
+                  {req.spec}
+                </span>
+                <span className="text-[#8E8E93] text-[11px]">
+                  {req.detail}
+                </span>
+              </div>
+            ))}
           </div>
-
-          <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xs">
-            <div className="divide-y divide-neutral-200">
-              {SYSTEM_REQUIREMENTS.map((req, idx) => (
-                <div
-                  key={idx}
-                  className="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start sm:items-center hover:bg-neutral-50/50 transition-colors"
-                >
-                  <div className="md:col-span-3 text-xs font-bold uppercase tracking-wider text-neutral-400 font-mono">
-                    {req.category}
-                  </div>
-                  <div className="md:col-span-5 text-sm sm:text-base font-bold text-neutral-900">
-                    {req.spec}
-                  </div>
-                  <div className="md:col-span-4 text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                    {req.detail}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        </div>
       </div>
     </div>
   );

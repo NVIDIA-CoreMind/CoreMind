@@ -1,49 +1,51 @@
 import React from 'react';
 import { Hero } from '../components/Hero';
+import { ProductStatement } from '../components/ProductStatement';
 import { Features } from '../components/Features';
-import { IDEPreview } from '../components/IDEPreview';
-import { AIWorkflow } from '../components/AIWorkflow';
+import { HowItWorks } from '../components/HowItWorks';
+import { AgentSection } from '../components/AgentSection';
+import { ScreenshotGallery } from '../components/ScreenshotGallery';
+import { TechnologySection } from '../components/TechnologySection';
 import { DownloadSection } from '../components/DownloadSection';
-import { BottomCTA } from '../components/BottomCTA';
-import { Terminal } from 'lucide-react';
+import { DocumentationSection } from '../components/DocumentationSection';
+import { ProjectSection } from '../components/ProjectSection';
+import { FinalCTA } from '../components/FinalCTA';
 
 export const Home: React.FC = () => {
   return (
     <main className="bg-white">
-      {/* 1. Hero Section with Live Quest Mode Stage */}
+      {/* 1. Hero & Large Desktop IDE Preview */}
       <Hero />
 
-      {/* 2. Core Capabilities & Superpowers */}
+      {/* 2. Trust / Product Statement (Understand, Create, Improve) */}
+      <ProductStatement />
+
+      {/* 3. Features Section (Everything you need to build - 6 cards) */}
       <Features />
 
-      {/* 3. Interactive IDE Workspace & Live Diff Preview */}
-      <section id="demo" className="py-24 bg-white border-b border-neutral-200/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200/80 font-mono inline-flex items-center gap-1.5">
-              <Terminal className="w-3.5 h-3.5" />
-              <span>Interactive Desktop IDE Demo</span>
-            </span>
-            <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-neutral-950">
-              Desktop Workspace &amp; Diff Engine
-            </h2>
-            <p className="mt-4 text-lg text-neutral-600 leading-relaxed">
-              Explore the native macOS editor layout with project tree, intelligent syntax highlighting, automated agent reasoning, and sandbox test runner.
-            </p>
-          </div>
+      {/* 4. How CoreMind Works (01 Describe, 02 Plan, 03 Build, 04 Verify) */}
+      <HowItWorks />
 
-          <IDEPreview />
-        </div>
-      </section>
+      {/* 5. AI Agent Workflow (5 Stages: Request → Reasoning → Plan → Changes → Verification) */}
+      <AgentSection />
 
-      {/* 4. Semantic AST & Autonomous Agent Architecture */}
-      <AIWorkflow />
+      {/* 6. Product Screenshots Gallery (6 views) */}
+      <ScreenshotGallery />
 
-      {/* 5. Download & Quickstart Installer */}
+      {/* 7. Technology Cards (Electron, React, TypeScript, AI Models, Local Development) */}
+      <TechnologySection />
+
+      {/* 8. Dedicated macOS Download Section (Apple Silicon) */}
       <DownloadSection />
 
-      {/* 6. Hackathon Wrap-up & Project CTA */}
-      <BottomCTA />
+      {/* 9. Documentation Section (Getting Started, Documentation, GitHub) */}
+      <DocumentationSection />
+
+      {/* 10. Project / Hackathon Section (Built to rethink the developer workflow) */}
+      <ProjectSection />
+
+      {/* 11. Final CTA */}
+      <FinalCTA />
     </main>
   );
 };

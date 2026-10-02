@@ -38,7 +38,7 @@ jobs:
         run: npm run build
         env:
           # Automatically handles custom domains or GitHub Pages repo subpaths
-          BASE_PATH: ${{ vars.BASE_PATH || '/' }}
+          BASE_PATH: /${{ github.event.repository.name }}/
 
       - name: Setup SPA 404 fallback for client-side routing
         run: cp dist/index.html dist/404.html

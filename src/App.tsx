@@ -9,7 +9,7 @@ import { ChangelogPage } from './pages/Changelog';
 
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-white text-[#111111] selection:bg-neutral-900 selection:text-white font-sans">
         <Navbar />

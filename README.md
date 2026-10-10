@@ -160,7 +160,7 @@ npm run dev
 
 ### Official Release Artifacts (macOS Apple Silicon)
 - **Installer**: `CoreMind-0.1.0-arm64.dmg` (162.1 MB)
-- **Direct Link**: [Download CoreMind v0.1.0](https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases/download/v0.1.0/CoreMind-0.1.0-arm64.dmg)
+- **Direct Link**: [Download CoreMind v0.1.0](https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases/download/CoreMind-v0.1.0/CoreMind-0.1.0-arm64.dmg)
 - **SHA-256 Checksum**:
   ```text
   232d3d9fc685b369a345c63bae472ce238cf5799e083bd7bda16db233ce49a5a

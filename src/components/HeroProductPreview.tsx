@@ -4,6 +4,7 @@ import {
   ChevronRight,
   ChevronDown,
   Sparkles,
+  Bot,
   Terminal,
   CheckCircle2,
   FileCode,
@@ -323,8 +324,8 @@ export const HeroProductPreview: React.FC = () => {
           <div className="hidden lg:flex lg:col-span-3 flex-col bg-[#F7F7F8] p-3 space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-[#E8E8E8]">
               <div className="flex items-center gap-1.5 text-xs font-semibold text-[#111111]">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                <span>AI Assistant</span>
+                <Bot className="w-3.5 h-3.5 text-blue-600" />
+                <span>Agent</span>
               </div>
               <span className="text-[10px] font-mono bg-white border border-[#E8E8E8] px-2 py-0.5 rounded text-[#6B6B6B]">
                 Cmd+L

@@ -91,6 +91,16 @@ export const DownloadSection: React.FC = () => {
               <span>•</span>
               <span>macOS</span>
             </div>
+            <div className="mt-2 text-center">
+              <a
+                href={macConfig.releasesPageUrl || 'https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] text-[#6B6B6B] hover:text-[#111111] hover:underline"
+              >
+                Direct .dmg binary download • View releases on GitHub →
+              </a>
+            </div>
 
             {/* SHA256 Checksum Verification */}
             {macConfig.sha256 && (

@@ -89,6 +89,16 @@ export const DownloadPage: React.FC = () => {
             <div className="mt-3 text-center text-xs text-[#8E8E93] font-mono">
               Available for Apple Silicon • macOS
             </div>
+            <div className="mt-2 text-center">
+              <a
+                href={macConfig.releasesPageUrl || 'https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-[#6B6B6B] hover:text-[#111111] hover:underline"
+              >
+                Direct .dmg binary download • View all releases on GitHub →
+              </a>
+            </div>
 
             {/* SHA Checksum */}
             {macConfig.sha256 && (

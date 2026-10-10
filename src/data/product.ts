@@ -9,6 +9,7 @@ export interface PlatformDownload {
   sha256?: string;
   releaseDate?: string;
   packageType?: string;
+  releasesPageUrl?: string;
   note?: string;
 }
 
@@ -110,12 +111,13 @@ export const DOWNLOAD_CONFIG: Record<string, PlatformDownload> = {
     name: 'macOS',
     available: true,
     version: '0.1.0',
-    url: 'https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases',
+    url: 'https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases/download/v0.1.0/CoreMind-0.1.0-arm64.dmg',
+    releasesPageUrl: 'https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases',
     architecture: 'Apple Silicon',
     minOS: 'macOS 12.0 or later',
     packageType: '.dmg',
-    size: '161.3 MB',
-    sha256: 'b35e02fc5d12143919366aec5ed462b361291e0c037563a9fa6947229626dca3',
+    size: '162.1 MB',
+    sha256: '232d3d9fc685b369a345c63bae472ce238cf5799e083bd7bda16db233ce49a5a',
     releaseDate: 'October 2026'
   },
   windows: {

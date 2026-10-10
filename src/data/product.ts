@@ -67,12 +67,12 @@ export interface TeamMember {
 export const PRODUCT_INFO = {
   name: 'CoreMind',
   smallLabel: 'AI-Powered Development Environment',
-  headline: 'Build faster with an IDE that thinks with you.',
-  headlineAlternative: 'Your AI-powered workspace for building software.',
+  headline: 'Your development workspace, built for AI-assisted coding.',
+  headlineAlternative: 'Plan tasks, write and understand code, and build software in one integrated environment.',
   supportingText:
-    'CoreMind is a modern AI-powered IDE designed to help developers understand code, plan solutions, write code, debug problems, and build software faster.',
-  primaryCtaText: 'Download for macOS',
-  secondaryCtaText: 'Explore CoreMind',
+    'Plan tasks, write and understand code, run commands, debug issues, and test your applications in one integrated development environment.',
+  primaryCtaText: 'Download CoreMind',
+  secondaryCtaText: 'Explore Features',
   platformSubtext: 'Available for Apple Silicon • macOS',
   copyright: '© 2026 CoreMind. All rights reserved.',
   links: {
@@ -81,7 +81,9 @@ export const PRODUCT_INFO = {
     backendRepo: 'https://github.com/NVIDIA-CoreMind/CoreMind-AI-Backend.git',
     download: 'https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases',
     docs: '/docs',
-    changelog: '/changelog'
+    changelog: '/changelog',
+    privacy: '/privacy',
+    terms: '/terms'
   }
 };
 
@@ -90,15 +92,15 @@ export const TRUST_STATEMENTS = {
   items: [
     {
       title: 'Understand',
-      description: 'Understand unfamiliar codebases faster.'
+      description: 'Explore unfamiliar codebases, inspect dependencies, and trace call graphs.'
     },
     {
-      title: 'Create',
-      description: 'Turn ideas into working code with AI assistance.'
+      title: 'Plan & Build',
+      description: 'Turn task descriptions into step-by-step plans and coordinated multi-file edits.'
     },
     {
-      title: 'Improve',
-      description: 'Debug, refactor, and improve your projects faster.'
+      title: 'Verify',
+      description: 'Inspect side-by-side diffs, run terminal test suites, and refine before committing.'
     }
   ]
 };

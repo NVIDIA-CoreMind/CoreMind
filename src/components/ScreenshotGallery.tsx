@@ -45,7 +45,7 @@ export const ScreenshotGallery: React.FC = () => {
               <span>TypeScript • UTF-8</span>
             </div>
             <div className="space-y-1">
-              <div className="text-[#8E8E93]">// CoreMind Editor Engine — Native low-latency buffer</div>
+              <div className="text-[#8E8E93]">// CoreMind Editor Engine: Native low-latency buffer</div>
               <div><span className="text-blue-600 font-medium">import</span> &#123; createMonacoInstance &#125; <span className="text-blue-600 font-medium">from</span> <span className="text-emerald-700">'@coremind/editor-core'</span>;</div>
               <div><span className="text-blue-600 font-medium">import</span> &#123; LanguageServerClient &#125; <span className="text-blue-600 font-medium">from</span> <span className="text-emerald-700">'@coremind/lsp'</span>;</div>
               <div className="h-2" />
@@ -121,7 +121,7 @@ export const ScreenshotGallery: React.FC = () => {
         return (
           <div className="bg-neutral-900 p-6 sm:p-8 font-mono text-xs text-neutral-200 select-none">
             <div className="flex items-center justify-between pb-3 border-b border-neutral-800 text-neutral-400 text-[11px] mb-4">
-              <span className="font-semibold text-neutral-100">zsh — CoreMind Native Terminal</span>
+              <span className="font-semibold text-neutral-100">zsh: CoreMind Native Terminal</span>
               <span>Apple Silicon ARM64</span>
             </div>
             <div className="space-y-1.5 leading-relaxed text-[11.5px]">
@@ -264,7 +264,7 @@ export const ScreenshotGallery: React.FC = () => {
                 <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/30 block" />
               </div>
               <span className="text-xs font-mono text-[#6B6B6B]">
-                CoreMind — {activeItem.title}
+                CoreMind / {activeItem.title}
               </span>
             </div>
 

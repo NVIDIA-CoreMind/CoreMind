@@ -48,7 +48,7 @@ export const Hero: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => scrollToSection('product')}
+            onClick={() => scrollToSection('features')}
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-[#111111] bg-white hover:bg-[#F7F7F8] border border-[#E8E8E8] rounded-lg transition-colors cursor-pointer w-full sm:w-auto"
           >
             <span>{PRODUCT_INFO.secondaryCtaText}</span>

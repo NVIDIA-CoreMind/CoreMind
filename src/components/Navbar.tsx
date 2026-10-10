@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { Logo } from './Logo';
 import { PRODUCT_INFO } from '../data/product';
@@ -6,6 +7,8 @@ import { PRODUCT_INFO } from '../data/product';
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,26 +20,33 @@ export const Navbar: React.FC = () => {
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const navOffset = 70;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          const navOffset = 70;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        const navOffset = 70;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
-
-  const navLinks = [
-    { label: 'Product', id: 'product' },
-    { label: 'Features', id: 'features' },
-    { label: 'How it Works', id: 'how-it-works' },
-    { label: 'Team', id: 'team' },
-    { label: 'Download', id: 'download' },
-    { label: 'Documentation', id: 'documentation' }
-  ];
 
   return (
     <header
@@ -55,16 +65,46 @@ export const Navbar: React.FC = () => {
 
           {/* Center Navigation Links (Desktop) */}
           <nav className="hidden md:flex items-center space-x-1" aria-label="Main Navigation">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                type="button"
-                onClick={() => scrollToSection(link.id)}
-                className="px-3.5 py-1.5 text-sm font-medium text-[#6B6B6B] hover:text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors cursor-pointer"
-              >
-                {link.label}
-              </button>
-            ))}
+            <button
+              type="button"
+              onClick={() => scrollToSection('product')}
+              className="px-3 py-1.5 text-sm font-medium text-[#6B6B6B] hover:text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors cursor-pointer"
+            >
+              Product
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection('features')}
+              className="px-3 py-1.5 text-sm font-medium text-[#6B6B6B] hover:text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors cursor-pointer"
+            >
+              Features
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection('how-it-works')}
+              className="px-3 py-1.5 text-sm font-medium text-[#6B6B6B] hover:text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors cursor-pointer"
+            >
+              How it Works
+            </button>
+            <Link
+              to="/docs"
+              className="px-3 py-1.5 text-sm font-medium text-[#6B6B6B] hover:text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              Docs
+            </Link>
+            <Link
+              to="/changelog"
+              className="px-3 py-1.5 text-sm font-medium text-[#6B6B6B] hover:text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              Changelog
+            </Link>
+            <button
+              type="button"
+              onClick={() => scrollToSection('team')}
+              className="px-3 py-1.5 text-sm font-medium text-[#6B6B6B] hover:text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors cursor-pointer"
+            >
+              Team
+            </button>
           </nav>
 
           {/* Right Actions: GitHub & Download (Desktop) */}
@@ -96,8 +136,9 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-[#111111] hover:bg-[#F7F7F8] transition-colors"
+              className="p-2 rounded-md text-[#111111] hover:bg-[#F7F7F8] transition-colors cursor-pointer"
               aria-label="Toggle mobile menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -109,16 +150,48 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-[#E8E8E8] bg-white px-4 pt-2 pb-5 space-y-2">
           <div className="space-y-1">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                type="button"
-                onClick={() => scrollToSection(link.id)}
-                className="w-full text-left px-3 py-2 text-sm font-medium text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
-              >
-                {link.label}
-              </button>
-            ))}
+            <button
+              type="button"
+              onClick={() => scrollToSection('product')}
+              className="w-full text-left px-3 py-2 text-sm font-medium text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              Product
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection('features')}
+              className="w-full text-left px-3 py-2 text-sm font-medium text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              Features
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection('how-it-works')}
+              className="w-full text-left px-3 py-2 text-sm font-medium text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              How it Works
+            </button>
+            <Link
+              to="/docs"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block w-full text-left px-3 py-2 text-sm font-medium text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              Docs
+            </Link>
+            <Link
+              to="/changelog"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block w-full text-left px-3 py-2 text-sm font-medium text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              Changelog
+            </Link>
+            <button
+              type="button"
+              onClick={() => scrollToSection('team')}
+              className="w-full text-left px-3 py-2 text-sm font-medium text-[#111111] hover:bg-[#F7F7F8] rounded-md transition-colors"
+            >
+              Team
+            </button>
           </div>
 
           <div className="pt-3 border-t border-[#E8E8E8] flex flex-col gap-2">
@@ -137,7 +210,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => scrollToSection('download')}
-              className="flex items-center justify-center w-full py-2 rounded-md bg-[#111111] text-white text-sm font-medium hover:bg-neutral-800 transition-colors"
+              className="flex items-center justify-center w-full py-2 rounded-md bg-[#111111] text-white text-sm font-medium hover:bg-neutral-800 transition-colors cursor-pointer"
             >
               Download for macOS
             </button>

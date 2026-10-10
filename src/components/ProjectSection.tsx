@@ -15,7 +15,7 @@ export const ProjectSection: React.FC = () => {
         </h2>
 
         <p className="mt-5 text-base sm:text-lg text-[#6B6B6B] leading-relaxed max-w-2xl mx-auto">
-          CoreMind explores how agentic AI can become a natural part of the software development environment — helping developers move from understanding a problem to planning, implementation, and verification within one workspace.
+          CoreMind explores how agentic AI can become a natural part of the software development environment, helping developers move from understanding a problem to planning, implementation, and verification within one workspace.
         </p>
 
         {/* Repository Cards */}

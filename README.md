@@ -1,126 +1,201 @@
-# CoreMind — Official macOS Download & Marketing Website
+# CoreMind — Official Website & Project Platform
 
-This repository contains the official, production-ready marketing and download website for **CoreMind**, an AI-native desktop IDE for software developers.
+<p align="center">
+  <img src="./public/icon-192.png" alt="CoreMind Icon" width="100" height="100" style="border-radius: 22px; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
+</p>
 
-## Design Philosophy
+<p align="center">
+  <strong>Official marketing, technical documentation, and macOS distribution portal for CoreMind IDE.</strong><br />
+  <em>Submitted to the Hackathon: Coding and Agentic Engineering Track (NVIDIA & Nebius AI Cloud).</em>
+</p>
 
-- **White Theme Only**: Consistent light aesthetics with white surfaces (`#ffffff`), subtle off-white backgrounds (`#fafafa`, `#f8fafc`), clean gray borders (`#e2e8f0`), and refined blue accents (`#2563eb`).
-- **No Emojis**: Crisp, minimal vector iconography from Lucide Icons throughout all UI and copy.
-- **Developer-Centric**: Clear technical specifications, keyboard shortcuts, code diff representations, and realistic desktop IDE previews.
+<p align="center">
+  <a href="https://coremind.dev">Live Portal: coremind.dev</a> •
+  <a href="#1-hackathon-overview--mission">Hackathon Mission</a> •
+  <a href="#2-the-coremind-ecosystem">Ecosystem Architecture</a> •
+  <a href="#3-website-setup--development">Website Setup</a> •
+  <a href="#4-full-stack-ecosystem-setup-guide">Full-Stack Setup</a> •
+  <a href="#5-ci--cd-pipelines">CI/CD Deployment</a>
+</p>
 
 ---
 
-## Supported Platform & Architecture
+## 1. Hackathon Overview & Mission
 
-CoreMind is currently available exclusively for **macOS**:
-- **Architecture**: Apple Silicon (M1, M2, M3, M4 series)
-- **Minimum OS**: macOS 12.0 (Monterey) or later
-- **Packaging**: macOS Disk Image (`.dmg`), Apple Notarized binary
+### Track
+**Coding and Agentic Engineering Track**
 
-### Future Platform Support
+### Problem Statement
+Software developers spend up to 40% of their time deciphering unfamiliar codebases, writing repetitive boilerplate, context-switching between fragmented tools (chat windows, shell terminals, and file trees), and resolving regressions from unverified AI code suggestions.
 
-The download architecture is structured via `PlatformDownload` in [`src/data/product.ts`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/src/data/product.ts):
+Existing AI coding assistants fail because:
+1. **Disconnected execution**: LLMs write code in a separate chat bubble without verifying whether it compiles or breaks tests.
+2. **Missing dependency awareness**: Suggestions lack structural context regarding multi-file call hierarchies and project architecture.
+3. **High cognitive friction**: Developers must manually copy, paste, run tests, diagnose stack traces, and feed errors back to the AI.
 
-```typescript
-export interface PlatformDownload {
-  name: string;
-  available: boolean;
-  version?: string;
-  url?: string;
-  architecture?: string;
-  minOS?: string;
-  size?: string;
-  sha256?: string;
-}
+### The CoreMind Solution
+**CoreMind** unifies coding, autonomous agent planning, and automated terminal verification into one native macOS desktop environment. It provides an autonomous software engineering loop:
+
+$$\text{Task} \longrightarrow \text{Reasoning} \longrightarrow \text{Plan} \longrightarrow \text{Multi-File Diffs} \longrightarrow \text{Terminal Test Execution} \longrightarrow \text{Self-Healing Fixes} \longrightarrow \text{Verified Code}$$
+
+This repository hosts the **production website, documentation reader, release distribution center, and interactive desktop product simulation** for the project.
+
+---
+
+## 2. The CoreMind Ecosystem
+
+The CoreMind platform consists of three coordinated repositories:
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                        CoreMind IDE Ecosystem                          │
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+      ┌────────────────────────────┼────────────────────────────┐
+      ▼                            ▼                            ▼
+┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
+│ CoreMind-App     │      │ CoreMind-Backend │      │ CoreMind Website │
+│ (Desktop IDE)    │      │ (Agent Engine)   │      │ (Web & Docs Hub) │
+├──────────────────┤      ├──────────────────┤      ├──────────────────┤
+│ • Electron 34    │      │ • FastAPI        │      │ • Vite 6 / React │
+│ • Monaco Editor  │      │ • NVIDIA Nemotron│      │ • Tailwind CSS v4│
+│ • xterm.js Shell │      │ • Nebius Cloud   │      │ • GitHub Pages   │
+│ • Antigravity UI │      │ • Safe Patcher   │      │ • Live Simulator │
+└──────────────────┘      └──────────────────┘      └──────────────────┘
 ```
 
-To enable future Windows releases, simply update `DOWNLOAD_CONFIG.windows.available = true` and provide the corresponding `.msi`/`.exe` URL and architecture without needing to redesign the website.
+1. **[CoreMind-Application](https://github.com/NVIDIA-CoreMind/CoreMind-Application)**: The native macOS Apple Silicon desktop IDE built with Electron, React, and Monaco Editor.
+2. **[CoreMind-AI-Backend](https://github.com/NVIDIA-CoreMind/CoreMind-AI-Backend)**: The autonomous engineering agent engine powered by **NVIDIA Nemotron** via **Nebius Token Factory**, providing TaskGraph orchestration, AST symbol extraction, and self-healing test repair.
+3. **[CoreMind](https://github.com/NVIDIA-CoreMind/CoreMind)** *(This Repository)*: The production-ready web platform deployed to [coremind.dev](https://coremind.dev), featuring technical documentation, changelogs, legal disclosures, and official `.dmg` downloads.
 
 ---
 
-## Website Routes
+## 3. Website Setup & Development
 
-| Route | Description |
-|---|---|
-| `/` | Primary marketing homepage with Hero, IDE Preview, Features, AI Workflows, Product Gallery, and Download section |
-| `/download` | Dedicated macOS download page with installation steps (1–5), system requirements, and SHA-256 verification |
-| `/features` | Deep dive into all 8 CoreMind capabilities with code examples and architecture highlights |
-| `/docs` | 3-column documentation reader with search filter, keyboard shortcuts, and categorized guides |
-| `/changelog` | Chronological release history (Initial v0.1.0 macOS release) |
+### Prerequisites
+- **Node.js**: v20 LTS or v22 LTS
+- **Package Manager**: npm v9+
 
----
-
-## Configuration & Assets
-
-All release metadata, versions, download URLs, and feature copies are centrally managed in:
-- [`src/data/product.ts`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/src/data/product.ts)
-
-### Configuring the Real Download URL
-In [`src/data/product.ts`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/src/data/product.ts):
-```typescript
-export const DOWNLOAD_CONFIG = {
-  macos: {
-    name: 'macOS',
-    available: true,
-    version: '0.1.0',
-    url: 'https://releases.coremind.dev/v0.1.0/CoreMind-0.1.0-arm64.dmg', // Replace placeholder
-    architecture: 'Apple Silicon',
-    ...
-  }
-}
-```
-
-### Adding Real Desktop Screenshots
-To replace the vector placeholder in the product gallery with actual application screenshots:
-1. Place image files in `src/assets/screenshots/` (e.g., `main-editor.png`).
-2. Update the `imagePath` property in `SCREENSHOTS` array in [`src/data/product.ts`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/src/data/product.ts).
-
----
-
-## Development & Building
+### Quickstart
 
 ```bash
-# Install dependencies
+# 1. Clone this repository
+git clone https://github.com/NVIDIA-CoreMind/CoreMind.git
+cd CoreMind
+
+# 2. Install dependencies
 npm install
 
-# Start development server
+# 3. Start local Vite development server
 npm run dev
+# Website opens at http://localhost:5173/
+```
 
-# Run linter
+### Production Build & Verification
+
+```bash
+# Run oxlint code quality audit
 npm run lint
 
-# Run production build & type checks
+# Run strict TypeScript compilation and Vite production build
 npm run build
 
-# Preview production build
+# Preview production build locally
 npm run preview
 ```
 
 ---
 
-## CI / CD Pipelines
+## 4. Full-Stack Ecosystem Setup Guide (For Judges & Evaluators)
 
-This repository is configured with automated GitHub Actions pipelines located in [`.github/workflows/`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/.github/workflows/):
+To run the complete CoreMind platform locally (IDE + AI Backend + Web Hub):
 
-### 1. Continuous Integration (CI) — [`ci.yml`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/.github/workflows/ci.yml)
-- **Triggers**: Pull requests targeting `main`, pushes to feature branches, and manual dispatch.
-- **Tasks**:
-  - Sets up Node.js 20 LTS with npm dependency caching.
-  - Runs `npm ci` for deterministic, clean installs.
-  - Runs `npm run lint` (`oxlint`) to catch code style and React hook violations.
-  - Runs `npm run build` (`tsc -b && vite build`) to enforce strict TypeScript safety and bundling integrity.
-  - Automatically cancels redundant in-flight runs when new commits are pushed (`concurrency: cancel-in-progress: true`).
+### Step 1: Start the CoreMind AI Backend
 
-### 2. Continuous Deployment (CD) — [`cd.yml`](file:///Users/manojsarya/Documents/My%20Projects/CoreMind/.github/workflows/cd.yml)
-- **Triggers**: Pushes to `main` branch and manual dispatch (`workflow_dispatch`).
-- **Tasks**:
-  - Builds the production distribution with customizable `BASE_PATH` (defaults to `/` or repository subpath).
-  - Automatically generates `404.html` fallback for seamless client-side SPA routing on GitHub Pages.
-  - Uploads the artifact using `@actions/upload-pages-artifact`.
-  - Deploys automatically to **GitHub Pages** via `@actions/deploy-pages`.
+```bash
+git clone https://github.com/NVIDIA-CoreMind/CoreMind-AI-Backend.git
+cd CoreMind-AI-Backend
 
-#### Enabling GitHub Pages in your GitHub Repository:
-1. Navigate to your repository on GitHub: `https://github.com/NVIDIA-CoreMind/CoreMind/settings/pages`
-2. Under **Build and deployment** → **Source**, select **GitHub Actions**.
-3. Any push or pull request merge to `main` will automatically build and deploy the website.
+# Setup Python 3.11+ virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 
+# Configure your Nebius Token Factory API key
+cp .env.example .env
+# Set NEBIUS_API_KEY in .env
+
+# Run FastAPI backend
+python3 main.py
+# Server starts on http://127.0.0.1:8000
+```
+
+### Step 2: Launch the CoreMind Desktop Application
+
+```bash
+git clone https://github.com/NVIDIA-CoreMind/CoreMind-Application.git
+cd CoreMind-Application
+
+# Install dependencies and start Electron
+npm install
+npm run dev
+```
+
+### Step 3: Explore the Marketing & Documentation Portal
+
+```bash
+cd CoreMind
+npm install
+npm run dev
+```
+
+---
+
+## 5. Website Architecture & Routes
+
+| Route | Purpose | Key Features |
+|---|---|---|
+| `/` | Landing Platform | Hero, Interactive IDE Simulation, Features, 5-Phase Workflow, Screenshots, Team, Download |
+| `/download` | macOS Release Hub | Native Apple Silicon `.dmg` installer, verified SHA-256 checksums, system specs |
+| `/docs` | Technical Documentation | Quickstart guide, AI agent workflows, keyboard shortcuts, architecture overview |
+| `/changelog` | Release History | Version highlights, feature breakdowns, and platform improvements |
+| `/privacy` | Privacy Policy | Local workspace processing disclosures, external AI data handling rules |
+| `/terms` | Terms of Service | Acceptable use policies, intellectual property rights, AI output verification |
+
+---
+
+## 6. Design & Performance Principles
+
+- **Zero Clutter**: Clean, light interface (`#ffffff`) with subtle borders (`#e8e8e8`), high-contrast typography, and zero distracting gradients or AI boilerplate.
+- **Accessibility**: Full `:focus-visible` indicators, semantic HTML elements, accessible navigation labels, and automatic `prefers-reduced-motion` compliance.
+- **High Performance**:
+  - Zero heavy animation libraries (optimized from 128 kB down to 4.8 kB).
+  - WebP/PNG image compression and SVG vectors for all brand iconography.
+  - Sub-200ms production builds with Vite and Tailwind CSS v4.
+
+---
+
+## 7. CI / CD Pipelines
+
+This repository is configured with automated GitHub Actions workflows located in `.github/workflows/`:
+
+1. **`ci.yml` (Continuous Integration)**:
+   - Triggers on all Pull Requests and pushes to feature branches.
+   - Executes `npm ci`, `oxlint` linting, and `tsc -b && vite build`.
+2. **`cd.yml` (Continuous Deployment)**:
+   - Triggers on pushes to `main`.
+   - Automatically builds the production distribution and publishes to **GitHub Pages** with SPA routing (`404.html` fallback).
+
+---
+
+## 8. Team & Authors
+
+- **Manoj Sarya** ([@Manojarya0207](https://github.com/Manojarya0207)) — Desktop IDE Architecture, Electron/React Core & Agent UI
+- **Pankaj Sarya** ([@pankajsarya](https://github.com/pankajsarya)) — AI Agent Engine, NVIDIA Nemotron Integration & Tooling
+- **Yashas** ([@yashas1624](https://github.com/yashas1624)) — Product Engineering, UI/UX, Testing & Workflows
+
+---
+
+## 9. License
+
+This project is open-source under the [MIT License](LICENSE).

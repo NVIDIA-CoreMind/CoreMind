@@ -270,7 +270,7 @@ export const ScreenshotGallery: React.FC = () => {
 
             <div className="flex items-center gap-2">
               <span className="text-[11px] font-mono text-[#6B6B6B] bg-white border border-[#E8E8E8] px-2 py-0.5 rounded">
-                {activeItem.category}
+                {activeItem.category} • Illustrative Preview
               </span>
             </div>
           </div>

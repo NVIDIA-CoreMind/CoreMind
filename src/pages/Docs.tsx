@@ -219,7 +219,7 @@ export const DocsPage: React.FC = () => {
                 Document: {activeArticle.slug}
               </span>
               <a
-                href="https://github.com/CoreMind-IDE"
+                href="https://github.com/NVIDIA-CoreMind/CoreMind-Application"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-emerald-700 hover:text-emerald-800 font-medium"
@@ -263,10 +263,12 @@ export const DocsPage: React.FC = () => {
                 Reach out to the CoreMind engineering team or report an issue on GitHub.
               </p>
               <a
-                href="mailto:support@coremind.dev"
+                href="https://github.com/NVIDIA-CoreMind/CoreMind-Application/issues"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block text-emerald-700 hover:text-emerald-800 font-medium pt-1"
               >
-                support@coremind.dev →
+                GitHub Issues & Discussions →
               </a>
             </div>
           </aside>

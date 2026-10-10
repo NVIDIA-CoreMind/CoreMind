@@ -114,9 +114,9 @@ export const DOWNLOAD_CONFIG: Record<string, PlatformDownload> = {
     architecture: 'Apple Silicon',
     minOS: 'macOS 12.0 or later',
     packageType: '.dmg',
-    size: '94.2 MB',
-    sha256: 'a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0',
-    releaseDate: 'September 2026'
+    size: '161.3 MB',
+    sha256: 'b35e02fc5d12143919366aec5ed462b361291e0c037563a9fa6947229626dca3',
+    releaseDate: 'October 2026'
   },
   windows: {
     name: 'Windows',
@@ -474,7 +474,7 @@ CoreMind generates inline diffs directly in your editor. Press Enter to accept o
 export const CHANGELOG_DATA = [
   {
     version: '0.1.0',
-    date: 'September 2026',
+    date: 'October 2026',
     tag: 'v0.1.0',
     isLatest: true,
     summary: 'Initial official release of CoreMind for macOS Apple Silicon.',

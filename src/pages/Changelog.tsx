@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Tag, Calendar, Download, CheckCircle2, Apple } from 'lucide-react';
 import { CHANGELOG_DATA } from '../data/product';
@@ -25,13 +24,9 @@ export const ChangelogPage: React.FC = () => {
         {/* Chronological Releases List */}
         <div className="space-y-16">
           {CHANGELOG_DATA.map((release) => (
-            <motion.article
+            <article
               key={release.version}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className="p-8 sm:p-12 rounded-3xl border border-neutral-200 bg-white shadow-xs"
+              className="p-8 sm:p-12 rounded-2xl border border-[#E8E8E8] bg-white shadow-2xs"
             >
               {/* Release Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 pb-8 border-b border-neutral-200/80">
@@ -113,7 +108,7 @@ export const ChangelogPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
 

@@ -102,29 +102,35 @@ export const DownloadSection: React.FC = () => {
               </a>
             </div>
 
-            {/* SHA256 Checksum Verification */}
+            {/* SHA-256 Checksum Verification Box */}
             {macConfig.sha256 && (
-              <div className="mt-6 pt-4 border-t border-[#E8E8E8] flex items-center justify-between text-[11px] font-mono text-[#8E8E93]">
-                <span className="truncate max-w-[280px]">
-                  SHA256: {macConfig.sha256.slice(0, 24)}...
-                </span>
-                <button
-                  type="button"
-                  onClick={copyChecksum}
-                  className="inline-flex items-center gap-1 text-[#111111] hover:underline cursor-pointer"
-                >
-                  {copiedSha ? (
-                    <>
-                      <Check className="w-3 h-3 text-emerald-600" />
-                      <span>Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3" />
-                      <span>Copy SHA</span>
-                    </>
-                  )}
-                </button>
+              <div className="mt-6 pt-4 border-t border-[#E8E8E8] text-left">
+                <div className="flex items-center justify-between text-xs mb-2">
+                  <span className="font-semibold text-[#111111]">SHA-256 Checksum</span>
+                  <button
+                    type="button"
+                    onClick={copyChecksum}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#F7F7F8] hover:bg-[#E8E8E8] border border-[#E8E8E8] text-xs font-medium text-[#111111] transition-colors cursor-pointer"
+                  >
+                    {copiedSha ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-emerald-700">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5 text-[#6B6B6B]" />
+                        <span>Copy Checksum</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="p-2.5 rounded-lg bg-[#F7F7F8] border border-[#E8E8E8] font-mono text-[11px] text-[#111111] break-all select-all">
+                  {macConfig.sha256}
+                </div>
+                <div className="mt-2 text-[11px] font-mono text-[#8E8E93]">
+                  Terminal verify: <code className="text-[#111111]">shasum -a 256 CoreMind-0.1.0-arm64.dmg</code>
+                </div>
               </div>
             )}
           </div>

@@ -157,6 +157,18 @@ npm run dev
 |---|---|---|
 | `/` | Landing Platform | Hero, Interactive IDE Simulation, Features, 5-Phase Workflow, Screenshots, Team, Download |
 | `/download` | macOS Release Hub | Native Apple Silicon `.dmg` installer, verified SHA-256 checksums, system specs |
+
+### Official Release Artifacts (macOS Apple Silicon)
+- **Installer**: `CoreMind-0.1.0-arm64.dmg` (162.1 MB)
+- **Direct Link**: [Download CoreMind v0.1.0](https://github.com/NVIDIA-CoreMind/CoreMind-Application/releases/download/v0.1.0/CoreMind-0.1.0-arm64.dmg)
+- **SHA-256 Checksum**:
+  ```text
+  232d3d9fc685b369a345c63bae472ce238cf5799e083bd7bda16db233ce49a5a
+  ```
+- **Terminal Verification**:
+  ```bash
+  shasum -a 256 CoreMind-0.1.0-arm64.dmg
+  ```
 | `/docs` | Technical Documentation | Quickstart guide, AI agent workflows, keyboard shortcuts, architecture overview |
 | `/changelog` | Release History | Version highlights, feature breakdowns, and platform improvements |
 | `/privacy` | Privacy Policy | Local workspace processing disclosures, external AI data handling rules |
